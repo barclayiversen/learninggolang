@@ -4,35 +4,22 @@
 package main
 
 import (
+
+	"github.com/gorilla/mux"
+	"os"
 	"fmt"
-	"golang.org/x/crypto/bcrypt"
-	"time"
-	"math/rand"
 	"net/http"
+
 )
 
-
-
-
-
-
-
-
 func main() {
-	fmt.Println(currenttime)
-	warrior := hero{
-		person: person{
-			first: "James",
-			last:  "Bond",
-		},
-		class: "Warrior"
-		strength:   3,
-		resilience: 2,
-		agility:    1,
-	}
 
-	//warrior.speak()
-	warrior.attack()
-	fmt.Println(warrior.strength)
+	router := mux.NewRouter()
 
+	router.HandleFunc ( path: "/api/user/new", controllers.CreateAccount).Methods( methods: "POST")
+	router.HandleFunc ( path: "/api/user/login", controllers.Authenticate).Methods( methods: "POST")
+	router.HandleFunc ( path: "/api/games/new", controllers.CreateGame).Methods( methods: "POST")
+	//router.HandleFunc ( path: "/api/user/new", controllers.GetContactsFor).Methods( methods: "GET")
+
+	router.Use(app.Jwt)
 }
