@@ -1,5 +1,5 @@
 //package gogame
-// Haven't built an http server yet. Need to work out basics of requests in and out
+//
 
 package main
 
