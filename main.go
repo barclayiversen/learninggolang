@@ -1,21 +1,16 @@
-//package gogame
-//
-
 package main
 
 import (
-	"github.com/barclayiversen/gogame/app"
-	"github.com/gorilla/mux"
-	"os"
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
-
+	"os"
 )
 
 func main() {
 
 	router := mux.NewRouter()
-	router.Use(app.JwtAuthentication) //attach JWT auth middleware
+	//router.Use(app.JwtAuthentication) //attach JWT auth middleware
 
 	port := os.Getenv("PORT") //Get port from .env file, we did not specify any port so this should return an empty string when tested locally
 	if port == "" {
