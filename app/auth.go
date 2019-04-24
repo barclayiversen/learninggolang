@@ -2,9 +2,9 @@ package app
 
 import (
 "net/http"
-u "lens/utils"
+u "github.com/barclayiversen/gogame/utils"
 "strings"
-"go-contacts/models"
+"github.com/barclayiversen/gogame/models"
 jwt "github.com/dgrijalva/jwt-go"
 "os"
 "context"
