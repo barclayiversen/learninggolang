@@ -20,7 +20,7 @@ func init() {
 }
 
 func index (res http.ResponseWriter, req *http.Request) {
-	t := 420
+	t := "This is some data that was passed in"
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	tpl.ExecuteTemplate(res, "index.gohtml", t)
 }
