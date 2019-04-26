@@ -1,13 +1,13 @@
 "Gogame" - A simple project built to learn Golang.
 
 TODO:
--Implement HTTP server
 -Establish DB connection (Datastore? Mongo?)
 -Design user schema
 -Implement user schema
 -Register mock users
--Sort out testing what's built up to this point
+-Setup nginx reverse proxy for plex
+-test plex in an iframe
 
--Implementation road map for first iteration of game code:
-  -Sessions? Memcache? Redis?
-  -Sockets? Chat room?
+Future feature ideas:
+-redis for sessions? 
+-Socketed chat room for plex
