@@ -2,39 +2,64 @@ package main
 
 import (
 	"fmt"
-	//"github.com/gorilla/mux" // still deciding on a mux
-	//"github.com/julienschmidt/httprouter"
-	"io"
+	"html/template"
 	"net/http"
-	"os"
 )
 
+type user struct {
+	Email string
+	Password string
+}
+
+var tpl *template.Template
+var dbUsers = map[string]user{}      // user ID, user
+var dbSessions = map[string]string{} // session ID, user ID
+
+func init() {
+	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
+}
+
 func index (res http.ResponseWriter, req *http.Request) {
+	t := 420
+	res.Header().Set("Content-Type", "text/html; charset=utf-8")
+	tpl.ExecuteTemplate(res, "index.gohtml", t)
+}
+
+func register(res http.ResponseWriter, req *http.Request) {
+	//err := req.ParseForm()
+	//if err != nil {
+	//	panic(err)
+	//}
+
+	if req.Method == http.MethodPost {
+		fmt.Println("This is a post request!")
+		user := req.Form
+		email := req.Form.Get("email")
+		psw := req.Form.Get("psw")
+		pswRepeat := req.Form.Get("psw-repeat")
+		fmt.Println(user, email, psw, pswRepeat)
+	}
+
 
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
+	tpl.ExecuteTemplate(res, "register.gohtml", nil)
+}
 
-	io.WriteString(res,`
-	<!--not serving from our server-->
-	<img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg">
-	`)
+func plex(res http.ResponseWriter, req *http.Request) {
+	res.Header().Set("Content-Type", "text/html; charset=utf-8")
+	tpl.ExecuteTemplate(res, "plex.gohtml", nil)
 }
 
 func main() {
 
-
 	router := http.NewServeMux()
-	//router := mux.NewRouter()
-	//router.Use(app.JwtAuthentication) //attach JWT auth middleware
-
-	port := os.Getenv("PORT") //Get port from .env file, we did not specify any port so this should return an empty string when tested locally
-	if port == "" {
-		port = "8000" //localhost
-	}
-
-	fmt.Println(port)
+	//router.Use(app.JwtAuthentication) //attach JWT auth middleware later
+	//Routes
 	router.Handle("/", http.HandlerFunc(index))
-	err := http.ListenAndServe(":" + port, router) //Launch the app, visit localhost:8000/api
-	if err != nil {
-		fmt.Print(err)
-	}
+	router.Handle("/register", http.HandlerFunc(register))
+	router.Handle("/plex", http.HandlerFunc(plex))
+	router.Handle("/styles/", http.StripPrefix("/styles/", http.FileServer(http.Dir("styles"))))
+	router.Handle("/favicon.ico", http.NotFoundHandler())
+	http.ListenAndServe(":8000", router)
+
 }
