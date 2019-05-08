@@ -8,6 +8,7 @@ TODO:
 -Setup nginx reverse proxy for plex
 -test plex in an iframe
 
-Future feature ideas:
--redis for sessions? 
+Long term goals:
+-redis for sessions
 -Socketed chat room for plex
+
